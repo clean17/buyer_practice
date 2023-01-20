@@ -23,21 +23,37 @@
                 </tr>
             </table>
         </div>
-        <div>  
-            
-            <form action="/purchase/${product.id}" method="post">
-                <div class="purchase_btn">
-                    <div>
-                        <select id="">
-                            <option >${product.name} ( <small>남은수량 ${product.qty}</small> )</option>
-                        </select>
+        <div>
+            <c:if test="${principal != null}">
+                <form action="/purchase/insert" method="post">
+                    <div class="purchase_btn">
+                        <div>
+                            <input type="hidden" name="productId" value="${product.id}">
+                            <!-- userId 를 보내지말고 .. 컨트롤러에서 검증해 -->
+                            <select name="count">
+                                <c:forEach begin="1" end="${product.qty}" var="num">
+                                    <option value="${num}">${product.name} ${num} 개</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div>
+                        </div>
+                        <button type="submit"> 구매 </button>
                     </div>
-                    <div>
-                        <input type="number" size="5" name="count" placeholder="구매 수량" max="50" id="">
-                    </div>
-                    <button type="submit"> 구매 </button>
-                </div>
-            </form>
-        </div> 
+                </form>
+            </c:if>
+        </div>
     </div>
+    <!-- 
+    <c:if test="${principal != null}">
+            <form action="/purchase/insert" method="post">
+                <input type="hidden" name="productId" value="${product.id}">
+                <select name="count">
+                    <c:forEach begin="1" end="${product.qty}" var="num">
+                        <option value="${num}">${num}</option>
+                    </c:forEach>
+                </select>
+                <button type="submit">구매하기</button>
+            </form>
+        </c:if> -->
 <%@ include file="../layout/footer.jsp" %>

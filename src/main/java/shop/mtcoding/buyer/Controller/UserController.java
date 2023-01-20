@@ -80,9 +80,5 @@ public class UserController {
 
     }
 
-    @GetMapping("/purchase")
-    public String purchase() {
-
-        return "user/purchaseList";
-    }
+    
 }
