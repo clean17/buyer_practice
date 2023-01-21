@@ -24,15 +24,25 @@ public class UserController {
 
     @GetMapping("/loginForm")
     public String loginForm(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        String username="";
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("remember")){
-                username = cookie.getValue();
-            }
-        }
-        request.setAttribute("remember", username);
+
+        /*
+         * // request 객체를 이용해서 로그인아이디를 기억하는 방법
+         * // 이런 방법도 있다는거지 쿠키가 있는데 굳이 사용할 이유는 없음
+         * Cookie[] cookies = request.getCookies();
+         * String username="";
+         * for (Cookie cookie : cookies) {
+         * if (cookie.getName().equals("remember")){
+         * username = cookie.getValue();
+         * }
+         * request.setAttribute("remember", username);
+         */
+
         return "user/loginForm";
+    }
+
+    @GetMapping("/joinForm")
+    public String joinForm() {
+        return "user/joinForm";
     }
 
     @GetMapping("/logout")
@@ -43,30 +53,24 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(String username, String password, String remember, HttpServletResponse response) {
-        User user = userRepository.findByUsernameAndPassword(username, password);       
-        if (user == null) {     // 로그인 실패시 
+        User principal = userRepository.findByUsernameAndPassword(username, password);
+        if (principal == null) { // 로그인 실패시
             return "redirect:/loginForm";
         } else {
-            if( remember == null){
+            if (remember == null) { // 항상 null 조건부터 설정한다
                 remember = "";
             }
-            if( remember.equals("on")){
+            if (remember.equals("on")) {
                 Cookie cookie = new Cookie("remember", username);
                 response.addCookie(cookie);
-                response.addHeader("Cookie",username);
-            }else{
+            } else {
                 Cookie cookie = new Cookie("remember", "");
                 response.addCookie(cookie);
                 cookie.setMaxAge(0);
             }
-            session.setAttribute("principal", user);
+            session.setAttribute("principal", principal);
             return "redirect:/";
         }
-    }
-
-    @GetMapping("/joinForm")
-    public String joinForm() {
-        return "user/joinForm";
     }
 
     @PostMapping("/join")
@@ -77,8 +81,5 @@ public class UserController {
         } else {
             return "redirect:/joinForm";
         }
-
     }
-
-    
 }

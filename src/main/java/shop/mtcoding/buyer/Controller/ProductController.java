@@ -27,9 +27,9 @@ public class ProductController {
     @GetMapping("/product/{id}")
     public String productDetail(@PathVariable int id, Model model) {
         Product product = productRepository.findById(id);
-        if(product == null){   // 없는 상품 검색시
-            return "redirect:/notfound";    // 에러페이지 만들어
-        }else{
+        if (product == null) { // 없는 상품 검색시
+            return "redirect:/notfound"; // 에러페이지 만들어
+        } else {
             model.addAttribute("product", product);
             return "product/detail";
         }

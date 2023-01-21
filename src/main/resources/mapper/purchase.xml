@@ -6,17 +6,17 @@
 <mapper namespace="shop.mtcoding.buyer.model.PurchaseRepository">
   <select id="findAll" resultType="shop.mtcoding.buyer.model.Purchase">
       select * from purchase_tb
-   </select>   
+   </select>
 
    <select id="findById" resultType="shop.mtcoding.buyer.model.Purchase">
-      select * from purchase_tb where user_id = #{id}
-   </select>
+      select * from purchase_tb where id = #{id}
+   </select>   
 
    <select id="finebyUserId" resultType="shop.mtcoding.buyer.dto.PurchaseAllDto">
          select pu.id, u.username, pr.name, pu.count
             from (select *
             from purchase_tb
-            where user_id = 1) pu
+            where user_id = #{id}) pu
             inner join user_tb u
             on pu.user_id = u.id
             inner join product_tb pr
@@ -33,14 +33,11 @@
       delete from purchase_tb where id = #{id}
    </delete>
    
-   <update id="updateById">
+   <update id="updateByUserId">
       update purchase_tb set 
         user_id = #{userId},
         product_id = #{productId},
         count = #{count}
       where id = #{id}
    </update>
-
-    
-
 </mapper>

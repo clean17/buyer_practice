@@ -1,7 +1,5 @@
 package shop.mtcoding.buyer.model;
 
-import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,15 +8,20 @@ import org.apache.ibatis.annotations.Param;
  */
 @Mapper
 public interface UserRepository {
-    // public int insert(@Param("username") String username, @Param("password") String password, @Param("email") String email);
-    // public User login(@Param("username") String username, @Param("password") String password);
+    // public int insert(@Param("username") String username, @Param("password")
+    // String password, @Param("email") String email);
+    // public User login(@Param("username") String username, @Param("password")
+    // String password);
     // public int delete(@Param("id") int id);
-    // public int updatePassword(@Param("id") int id, @Param("password") String password);
+    // public int updatePassword(@Param("id") int id, @Param("password") String
+    // password);
 
-    public int insert(@Param("username") String username, @Param("password") String password, @Param("email") String email);
-    public List<User> findAll();
-    public User findById(int id);
+    public int insert(@Param("username") String username, @Param("password") String password,
+            @Param("email") String email);
+
     public int updateById(@Param("id") int id, @Param("password") String password);
+
     public int deleteById(@Param("id") int id);
-    public User findByUsernameAndPassword(@Param("username")String username, @Param("password")String password);
+
+    public User findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 }

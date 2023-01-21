@@ -15,7 +15,7 @@
     
     <nav>
         <div>
-            <img src="images/d.jpg" usemap="#image-map">
+            <img src="/images/d.jpg" usemap="#image-map">
 
 <map name="image-map">
     <area target="" alt="" title="" href="/" coords="1,0,202,67" shape="rect">
