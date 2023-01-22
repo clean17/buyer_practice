@@ -62,15 +62,15 @@ public class PurchaseController {
         return "redirect:/";
     }
 
-    @PostMapping("/purchase/{id}/delete") // 구매목록 - 구매취소 버튼
-    public String purchaseDelete(@PathVariable int id) {
+    @PostMapping("/purchase/delete") // 구매목록 - 구매취소 버튼
+    public String purchaseDelete(int purchaseId) {
         // 1. 세션 체크 ( 유저 확인 ) - 이건 컨트롤러의 책임
         User principal = (User) session.getAttribute("principal");
         if (principal == null) {
             return "redirect:/notfound";
         }
 
-        int result = purchaseService.구매취소하기(principal.getId(), id);
+        int result = purchaseService.구매취소하기(purchaseId);
         if (result == -1)
             return "redirect:/notfound";
 

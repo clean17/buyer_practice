@@ -7,8 +7,10 @@ import java.time.format.DateTimeFormatter;
 public class DateUtil {
 
     public static String format(Timestamp stamp) {
-        LocalDateTime nowTime = stamp.toLocalDateTime();
-        String nowStr = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        return nowStr;
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }
+
+// LocalDateTime nowTime = stamp.toLocalDateTime();
+// String nowStr = nowTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+// return nowStr;

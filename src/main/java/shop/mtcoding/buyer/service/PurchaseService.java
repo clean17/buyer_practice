@@ -53,29 +53,29 @@ public class PurchaseService {
     }
 
     @Transactional
-    public int 구매취소하기(int principalId, int id) {
-        /*
-         * 상품 취소 - 상품테이블에 count 만큼 추가
-         * 
-         * 구매테이블에서 레코드 삭제 ( id 삭제 )
-         * 
-         */
+    public int 구매취소하기(int purchaseId) {
 
         // 구매테이블에 존재하는 레코드인지 검증
-        Purchase purchase = purchaseRepository.findById(id);
+        Purchase purchase = purchaseRepository.findById(purchaseId);
         if (purchase == null)
             return -1;
 
-        // 상품테이블 수정
+        // 존재하는 상품인지 검증
         Product product = productRepository.findById(purchase.getProductId());
-        int updateQty = product.getQty() + purchase.getCount();
+        if (product == null)
+            return -1;
+
+        // 상품테이블 수정
         int result = productRepository.updateById(
-                product.getId(), product.getName(), product.getPrice(), updateQty);
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getQty() + purchase.getCount());
         if (result != 1)
             return -1;
 
         // 구매 테이블 레코드 삭제
-        int result2 = purchaseRepository.deleteById(id);
+        int result2 = purchaseRepository.deleteById(purchaseId);
         if (result2 != 1)
             return -1;
 
